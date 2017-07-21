@@ -2045,10 +2045,10 @@ void abyss_maybe_spawn_xp_exit()
     const bool stairs = !at_branch_bottom()
                         && you.props.exists(ABYSS_SPAWNED_XP_EXIT_KEY)
                         && you.props[ABYSS_SPAWNED_XP_EXIT_KEY].get_bool();
-
-    destroy_wall(you.pos()); // fires listeners etc even if it wasn't a wall
-    grd(you.pos()) = stairs ? DNGN_ABYSSAL_STAIR : DNGN_EXIT_ABYSS;
-    big_cloud(CLOUD_TLOC_ENERGY, &you, you.pos(), 3 + random2(3), 3, 3);
+    const coord_def stair_pos = coord_def(you.pos().x+1,you.pos().y);
+    destroy_wall(stair_pos); // fires listeners etc even if it wasn't a wall
+    grd(stair_pos) = stairs ? DNGN_ABYSSAL_STAIR : DNGN_EXIT_ABYSS;
+    big_cloud(CLOUD_TLOC_ENERGY, &you, stair_pos, 3 + random2(3), 3, 3);
     redraw_screen(); // before the force-more
     mprf(MSGCH_BANISHMENT,
          "The substance of the Abyss twists violently,"
